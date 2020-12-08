@@ -1,0 +1,61 @@
+DROP FUNCTION scoreSave();
+CREATE OR REPLACE FUNCTION scoreSave() RETURNS VOID AS $$
+
+DECLARE
+	IDEquipes int[];
+	matchJoues int;
+	
+	i record;
+    vis int;
+    dom int;
+    score1 int;
+    score2 int;
+    stmt text;
+	
+BEGIN
+
+	SELECT array_agg(id_equipe) INTO IDEquipes FROM EQUIPE;
+	
+	EXECUTE 'CREATE TABLE score(id_equipe int, matchsJoues int, points int, gagne int, egalite int, perdu int, butPour int, butContre int);';
+	
+	FOR i IN 1..ARRAY_LENGTH(IDEquipes,1) LOOP
+		--CHERCHE LE NB DE MATCHS JOUE POUR CHAQUE EQUIPE
+		SELECT COUNT(*)+1 INTO matchJoues 
+		FROM EQUIPE 
+		INNER JOIN RENCONTRE r1 on EQUIPE.id_equipe = r1.id_visiteur 
+		INNER JOIN RENCONTRE r2 on EQUIPE.id_equipe = r2.id_domicile 
+		WHERE id_equipe = IDEquipes[i] 
+		GROUP BY EQUIPE.id_equipe;
+		
+		
+	
+		EXECUTE 'INSERT INTO score VALUES (' || IDEquipes[i] || ', ' || matchJoues || ', 0, 0, 0, 0, 0, 0);';
+		
+	END LOOP;
+
+	for i in select * from rencontre loop
+        select i.score_domicile into score1 from rencontre;
+        select i.score_visiteur into score2 from rencontre;
+        select i.id_domicile into dom from rencontre;
+        select i.id_visiteur into vis from rencontre;
+        if score1 > score2 then
+            raise notice '% : dom > vis : %', dom, vis;
+            execute 'update score set points = points+3, gagne = gagne+1  where id_equipe = ' || dom || ';';
+            execute 'update score set perdu = perdu + 1 where id_equipe = ' || vis || ';';
+        elsif score1 < score2 then
+            raise notice '% : dom < vis : %', dom, vis;
+            execute 'update score set points = points+3, gagne = gagne+1 where id_equipe = ' || vis || ';';
+            execute 'update score set perdu = perdu + 1 where id_equipe = ' || dom || ';';
+        elsif score1 = score2 then
+            raise notice '% : dom = vis : %', dom, vis;
+            execute 'update score set points = points + 1, egalite = egalite+1 where id_equipe = ' || dom || ';';
+            execute 'update score set points = points + 1, egalite = egalite+1 where id_equipe = ' || vis || ';';
+        end if;
+        execute 'update score set butPour = butPour + '|| score1 ||', butContre = butContre+'||score2||' where id_equipe = ' || dom || ';';
+        execute 'update score set butPour = butPour + '|| score2 ||', butContre = butContre+'||score1||' where id_equipe = ' || vis || ';';
+    end loop;
+
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT scoreSave();

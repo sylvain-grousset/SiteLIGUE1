@@ -1,0 +1,6 @@
+SELECT COUNT(*)+1
+	FROM EQUIPE
+	INNER JOIN RENCONTRE r1 on EQUIPE.id_equipe = r1.id_visiteur
+	INNER JOIN RENCONTRE r2 on EQUIPE.id_equipe = r2.id_domicile
+	GROUP BY EQUIPE.id_equipe;
+

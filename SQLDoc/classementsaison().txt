@@ -1,0 +1,31 @@
+DROP FUNCTION classementSaison(saison character varying);
+CREATE OR REPLACE FUNCTION classementSaison(saison character varying)
+	RETURNS TABLE (nomEquipe varchar, points1 int, butPours1 int, butContre1 int)AS $$
+
+DECLARE 
+	RealSaison integer;
+	test varchar[];
+BEGIN 
+
+	RealSaison = substring(saison, 1, 4);
+	
+	SELECT DISTINCT array_agg(DISTINCT RENCONTRE.etat) INTO test FROM RENCONTRE;
+	
+	FOR i IN 1..array_length(test, 1) LOOP
+		IF test[i] = 'En cours' THEN
+			RAISE NOTICE 'SAISON EN COURS';
+			EXIT;
+		ELSE	
+			RETURN QUERY SELECT nom, points, butsPour, butsContre FROM SAISONEQUIPE2020 ORDER BY POINTS;
+			RAISE NOTICE 'SAISON TERMINEE';
+		END IF;
+	END LOOP;
+
+
+	
+
+
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * FROM classementSaison('2018/2019');
