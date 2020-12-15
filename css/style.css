@@ -11,6 +11,7 @@ body {
   margin: 0;
   padding: 0;
   background: #ccc;
+  width: 100%;
 }
  
 .nav ul {
@@ -60,4 +61,33 @@ body {
   }
  
 }
+.leTableau {
+  width: 80%;
+  
+  padding-left: 10%;
+}
+
+.lebandeau{
+  width: 100%;
+  border: solid 1px black;
+  padding-bottom: 10px;
+}
+.lebandeau span{
+  display: inline-block;
+  width: 11%;
+  text-align: center;
+  margin: 2px;
+  
+}
+
+.uneLigne{
+border: solid 1px black;
+}
+.uneLigne span{
+  display: inline-block;
+  width: 11%;
+  text-align: center;
+  margin: 2px;
+}
+
 

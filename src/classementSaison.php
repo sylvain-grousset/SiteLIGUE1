@@ -26,13 +26,25 @@ include('gestionBDD.php');
     INNER JOIN EQUIPE on SCORE.id_equipe = EQUIPE.id_equipe;");
     $req->execute();
     
-    echo "<table><tr><td>Nom de l'équipe</td><td>MatchJoues</td><td>Points</td><td>Gagnés</td><td>Egalités</td><td>Perdu</td><td>ButPour</td><td>ButContre</td></tr>";
+    echo "<div class='leTableau'><div class='lebandeau'><span>Nom de l'équipe</span> <span>MatchJoues</span> <span>Points</span> <span>Gagnés </span><span>Egalités</span> <span>Perdu </span><span>ButPour </span><span>ButContre </span></div>";
     while($ligne = $req->fetch()){
-       
-        echo "<tr><td>" . $ligne[0] . "</td> <td>" . $ligne[1] . "</td> <td>" . $ligne[2] . "</td><td>" . $ligne[3] . "</td><td>" . "</td><td>" . $ligne[4] . "</td><td>" . "</td><td>
-        " . $ligne[5] . "</td><td>" . "</td><td>" . $ligne[6] . "</td><td>" . "</td><td>" . $ligne[7] . "</td></tr>";
+       ?>
+
+        <div class="uneLigne">
+         <span><?php echo $ligne[0] ?> </span>
+         <span><?php echo $ligne[1] ?></span>
+         <span><?php echo $ligne[2] ?></span>
+         <span><?php  echo $ligne[3] ?></span>
+         <span><?php echo $ligne[4] ?> </span>
+         <span><?php echo $ligne[5] ?></span>
+         <span><?php echo $ligne[6] ?></span>
+         <span><?php echo $ligne[7] ?></span>
+        </div>
+
+
+        <?php
     }
-    echo "</table>";
+    echo "</div>";
 
 
 ?>
