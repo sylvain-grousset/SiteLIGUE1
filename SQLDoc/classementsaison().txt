@@ -1,7 +1,5 @@
 DROP FUNCTION classementSaison(saison character varying);
-CREATE OR REPLACE FUNCTION classementSaison(saison character varying)
-	RETURNS TABLE (nomEquipe varchar, points1 int, butPours1 int, butContre1 int)AS $$
-
+CREATE OR REPLACE FUNCTION classementSaison(saison character varying) RETURNS VOID AS $$
 DECLARE 
 	RealSaison integer;
 	test varchar[];
@@ -16,7 +14,7 @@ BEGIN
 			RAISE NOTICE 'SAISON EN COURS';
 			EXIT;
 		ELSE	
-			RETURN QUERY SELECT nom, points, butsPour, butsContre FROM SAISONEQUIPE2020 ORDER BY POINTS;
+			
 			RAISE NOTICE 'SAISON TERMINEE';
 		END IF;
 	END LOOP;
