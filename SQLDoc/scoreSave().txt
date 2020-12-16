@@ -13,10 +13,9 @@ DECLARE
     stmt text;
 	
 BEGIN
-
+	
 	SELECT array_agg(id_equipe) INTO IDEquipes FROM EQUIPE;
 	
-	EXECUTE 'CREATE TABLE score(id_equipe int, matchsJoues int, points int, gagne int, egalite int, perdu int, butPour int, butContre int);';
 	
 	FOR i IN 1..ARRAY_LENGTH(IDEquipes,1) LOOP
 		--CHERCHE LE NB DE MATCHS JOUE POUR CHAQUE EQUIPE

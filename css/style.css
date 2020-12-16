@@ -90,4 +90,22 @@ border: solid 1px black;
   margin: 2px;
 }
 
+table{
+  display: inline-block;
+  border: solid 1px black;
+  text-align: center;
+  margin: 2px;
+  margin-left: 10px;
+  
 
+}
+
+#test{
+  display: flex;
+  width: 50%;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: auto;
+}
