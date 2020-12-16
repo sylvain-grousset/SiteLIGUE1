@@ -10,7 +10,6 @@
       <ul>
         <li class="accueil"><a href="index.php">Accueil</a></li>
         <li class="classementSaison"><a class="active" href="#">Classement</a></li>
-        <li class="about"><a href="#">About</a></li>
       </ul>
     </div>
   </header>
@@ -19,12 +18,13 @@
 <?php
 include('gestionBDD.php');
 
-    $bdd = new gestionBDD('postgres', 'P@ssw0rdsio', 'LIGUE1');
+    $bdd = new gestionBDD('postgres', 'bpsen', 'LIGUE1');
     $cnx = $bdd->getCnx();
 
     $req = $cnx->prepare("SELECT EQUIPE.nom, SCORE.matchsjoues, SCORE.points, gagne, egalite, perdu, butpour, butcontre
     FROM SCORE
-    INNER JOIN EQUIPE on SCORE.id_equipe = EQUIPE.id_equipe;");
+    INNER JOIN EQUIPE on SCORE.id_equipe = EQUIPE.id_equipe
+    ORDER BY points DESC;");
     $req->execute();
     
     echo "<div class='leTableau'><div class='lebandeau'><span>Nom de l'équipe</span> <span>MatchJoues</span> <span>Points</span> <span>Gagnés </span><span>Egalités</span> <span>Perdu </span><span>ButPour </span><span>ButContre </span></div>";

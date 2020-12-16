@@ -90,22 +90,28 @@ border: solid 1px black;
   margin: 2px;
 }
 
-table{
+.lesEquipes{
+  width: 100%;
+  margin-left: 5%;
+
+}
+
+.uneEquipe{
   display: inline-block;
+  width: 26%;
   border: solid 1px black;
   text-align: center;
-  margin: 2px;
-  margin-left: 10px;
-  
-
+  margin-right: 2%;
+  margin-bottom: 2%;
+  border-radius: 50px;
+  padding: 1%;
+  cursor: pointer;
+  transition: ease-in-out 0.2s;
 }
 
-#test{
-  display: flex;
-  width: 50%;
-  gap: 1rem;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  margin: auto;
+.uneEquipe:hover{
+  transform: scale(1.05);
 }
+
+
+

@@ -10,34 +10,40 @@
       <ul>
         <li class="accueil"><a class="active" href="index.php">Accueil</a></li>
         <li class="classementSaison"><a href="classementSaison.php">Classement</a></li>
-        <li class="about"><a href="#">About</a></li>
       </ul>
     </div>
   </header>
   <br>
-  <div id=test>
+  <div class="lesEquipes">
+
 <?php
+
 include('gestionBDD.php');
 
-  $bdd = new gestionBDD('postgres', 'P@ssw0rdsio', 'LIGUE1');
+  $bdd = new gestionBDD('postgres', 'bpsen', 'LIGUE1');
     $cnx = $bdd->getCnx();
 
     $req = $cnx->prepare("SELECT EQUIPE.nom, logo FROM EQUIPE;");
     $req->execute();
 
-    $compteur = 0;
-  while($ligne = $req->fetch()){
-    $compteur++;
-    echo "<table id=".$compteur."><tr><td>" .$ligne[0] . "</td></tr>";
-    echo "<tr><td><img width=100 height=100 src=". $ligne[1] . "></td></tr></table>";
+  while($ligne = $req->fetch()){ ?>
+    <a href="presentation.php?equipe=<?php echo $ligne[0] ?>" >
+    <div class="uneEquipe">
+      <span><?php echo $ligne[0] ?> </span>
+      <br>
+      <span><?php echo '<img  width=100 height=100 src="'. $ligne[1] . '">' ?> </span>
 
-    if ($compteur == 3){
-      echo "<br>";
-    }
-  }
+    </div>
+    </a>
+    
+    <?php }
+  
 
 
-    ?>
+  ?>
+
+
+ 
 
 </div>
 </body>
